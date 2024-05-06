@@ -83,7 +83,7 @@ function parseFunctionIndexes(): void
 
     assert(count($functions) > 1000);
 
-    file_put_contents(__DIR__ . '/../data/php-functions-indexes.json', json_encode($functions, JSON_PRETTY_PRINT));
+    file_put_contents(__DIR__ . '/../data/php-function-indexes.json', json_encode($functions, JSON_PRETTY_PRINT));
 }
 
 // Helper functions
