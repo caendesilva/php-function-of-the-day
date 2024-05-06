@@ -13,4 +13,4 @@ The database generator uses dataset by [Exact.io](https://www.exakat.io/en/top-1
 found in almost 2000 open source PHP projects, in order to diff out the most popular functions and highlight the lesser known ones.
 
 Additionally, extracts from the PHP Manual are used to provide descriptions of the functions, with the PHP Manual being licensed under the [Creative Commons Attribution 3.0 License](https://github.com/php/doc-base/blob/master/LICENSE).
-This dataset is parsed through https://www.php.net/manual/en/indexes.functions.php to extract the function descriptions.
+This dataset is parsed through [www.php.net/manual/en/indexes.functions.php](https://www.php.net/manual/en/indexes.functions.php) to extract the function descriptions.
