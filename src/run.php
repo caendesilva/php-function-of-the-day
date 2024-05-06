@@ -8,7 +8,7 @@ createFunctionDataset();
 
 echo "Done! (Completed in " . number_format((microtime(true) - $timeStart) * 1000, 2) . "ms)\n";
 
-function createFunctionDataset()
+function createFunctionDataset(): void
 {
     // Get all defined functions
     $functions = get_defined_functions();
