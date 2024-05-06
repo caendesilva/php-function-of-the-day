@@ -31,6 +31,7 @@ function downloadFunctionIndexes(): void
 {
     $cacheDir = __DIR__ . '/../data/cache';
     $cacheFile = $cacheDir . '/manual.indexes.functions.php.html';
+
     if (! file_exists($cacheFile)) {
         file_put_contents($cacheFile, file_get_contents('https://www.php.net/manual/en/indexes.functions.php'));
         assert(str_contains(file_get_contents($cacheFile), 'PHP: Function and Method listing - Manual'));
