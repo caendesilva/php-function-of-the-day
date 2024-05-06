@@ -5,6 +5,7 @@ $timeStart = microtime(true);
 echo "Generating datasets...\n";
 
 createFunctionDataset();
+downloadFunctionIndexes();
 
 echo "Done! (Completed in " . number_format((microtime(true) - $timeStart) * 1000, 2) . "ms)\n";
 
@@ -24,6 +25,15 @@ function createFunctionDataset(): void
     $functions = array_filter($functions, fn (string $function) => ! str_starts_with_any($function, $prefixes));
 
     file_put_contents(__DIR__ . '/../data/php-functions.txt', implode("\n", $functions));
+}
+
+function downloadFunctionIndexes(): void
+{
+    $cacheDir = __DIR__ . '/../data/cache';
+    $cacheFile = $cacheDir . '/manual.indexes.functions.php.html';
+    if (! file_exists($cacheFile)) {
+        file_put_contents($cacheFile, file_get_contents('https://www.php.net/manual/en/indexes.functions.php'));
+    }
 }
 
 function str_starts_with_any(string $haystack, array $needles): bool
