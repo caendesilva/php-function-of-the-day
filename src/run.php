@@ -24,14 +24,6 @@ function createFunctionDataset(): void
     file_put_contents(__DIR__ . '/../data/php-functions.txt', implode("\n", $functions));
 }
 
-/** @noinspection PhpUnused */
-function dd($data): void
-{
-    var_dump($data);
-
-    die(1);
-}
-
 function str_starts_with_any(string $haystack, array $needles): bool
 {
     foreach ($needles as $needle) {
@@ -41,4 +33,12 @@ function str_starts_with_any(string $haystack, array $needles): bool
     }
 
     return false;
+}
+
+/** @noinspection PhpUnused */
+function dd($data): void
+{
+    var_dump($data);
+
+    die(1);
 }
