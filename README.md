@@ -11,3 +11,6 @@ The frontend is built with vanilla HTML, CSS, and JavaScript, with the static we
 
 The database generator uses dataset by [Exact.io](https://www.exakat.io/en/top-100-php-functions), of the 100 most popular functions 
 found in almost 2000 open source PHP projects, in order to diff out the most popular functions and highlight the lesser known ones.
+
+Additionally, extracts from the PHP Manual are used to provide descriptions of the functions, with the PHP Manual being licensed under the [Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/).
+This dataset is parsed through https://www.php.net/manual/en/indexes.functions.php to extract the function descriptions.
