@@ -40,6 +40,8 @@ function downloadFunctionIndexes(): void
     assert(filesize($cacheFile) > 1024);
 }
 
+// Helper functions
+
 function str_starts_with_any(string $haystack, array $needles): bool
 {
     foreach ($needles as $needle) {
