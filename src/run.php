@@ -18,3 +18,9 @@ function createFunctionDataset()
 
     file_put_contents(__DIR__ . '/../data/php-functions.txt', implode("\n", $functions));
 }
+
+function dd($data)
+{
+    var_dump($data);
+    die();
+}
