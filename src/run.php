@@ -106,3 +106,23 @@ function dd($data): void
 
     die(1);
 }
+
+/**
+ * Deterministic function to extract random items from an array.
+ *
+ * The same seed will result in the same items being extracted every time.
+ */
+function extractRandomItems(array $array, int $count, int $seed): array
+{
+    mt_srand($seed); // Set seed for deterministic randomness
+    $keys = array_rand($array, $count); // Randomly select $count keys from the array
+    $result = [];
+    if (is_array($keys)) {
+        foreach ($keys as $key) {
+            $result[$key] = $array[$key]; // Extract corresponding items
+        }
+    } else {
+        $result[$keys] = $array[$keys]; // Extract single item
+    }
+    return $result;
+}
