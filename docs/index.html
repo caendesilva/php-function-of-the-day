@@ -138,37 +138,37 @@
 </footer>
 <script>
     function loadFunctionOfTheDay(today) {
-            fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json', {
-                headers: {
-                    // Experimental to see if this lets us use the GitHub traffic data
-                    'Referer': 'https://php-function-of-the-day-api.caendesilva.github.io/api/database.json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => displayFunctionOfTheDay(data))
-                .catch(error => console.error('Error fetching data:', error));
-
-            function displayFunctionOfTheDay(data) {
-                const functionOfTheDay = data[today];
-
-                if (functionOfTheDay) {
-                    const template = document.getElementById('function-template');
-                    const functionCard = document.importNode(template.content, true);
-                    functionCard.querySelector('.function-name').textContent = functionOfTheDay.name + '()';
-                    functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
-                    functionCard.querySelector('.function-url').href = functionOfTheDay.url;
-                    functionCard.querySelector('#date').textContent = new Date(today).toDateString();
-                    const twitterShareMessage = `The #PHP function of the day is ${functionOfTheDay.name}() - ${functionOfTheDay.description}! Check it out at https://git.desilva.se/php-function-of-the-day #PHPC #PHPFunctionOfTheDay`;
-                    functionCard.querySelector('#share-on-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(twitterShareMessage);
-                    document.getElementById('function-container').appendChild(functionCard);
-                } else {
-                    const noFunctionMessage = document.createElement('p');
-                    noFunctionMessage.textContent = "Sorry, no function available for today. Someone forgot to update the database! Remind @CodeWithCaen that it's a new near!";
-                    document.getElementById('function-container').appendChild(noFunctionMessage);
-                }
-
-                document.getElementById('loading-indicator').remove();
+        fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json', {
+            headers: {
+                // Experimental to see if this lets us use the GitHub traffic data
+                'Referer': 'https://php-function-of-the-day-api.caendesilva.github.io/api/database.json'
             }
+        })
+            .then(response => response.json())
+            .then(data => displayFunctionOfTheDay(data))
+            .catch(error => console.error('Error fetching data:', error));
+
+        function displayFunctionOfTheDay(data) {
+            const functionOfTheDay = data[today];
+
+            if (functionOfTheDay) {
+                const template = document.getElementById('function-template');
+                const functionCard = document.importNode(template.content, true);
+                functionCard.querySelector('.function-name').textContent = functionOfTheDay.name + '()';
+                functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
+                functionCard.querySelector('.function-url').href = functionOfTheDay.url;
+                functionCard.querySelector('#date').textContent = new Date(today).toDateString();
+                const twitterShareMessage = `The #PHP function of the day is ${functionOfTheDay.name}() - ${functionOfTheDay.description}! Check it out at https://git.desilva.se/php-function-of-the-day #PHPC #PHPFunctionOfTheDay`;
+                functionCard.querySelector('#share-on-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(twitterShareMessage);
+                document.getElementById('function-container').appendChild(functionCard);
+            } else {
+                const noFunctionMessage = document.createElement('p');
+                noFunctionMessage.textContent = "Sorry, no function available for today. Someone forgot to update the database! Remind @CodeWithCaen that it's a new near!";
+                document.getElementById('function-container').appendChild(noFunctionMessage);
+            }
+
+            document.getElementById('loading-indicator').remove();
+        }
     }
 
     document.addEventListener("DOMContentLoaded", function () {
