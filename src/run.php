@@ -126,3 +126,21 @@ function extractRandomItems(array $array, int $count, int $seed): array
     }
     return $result;
 }
+
+/**
+ * Deterministic function to shuffle an array.
+ *
+ * The same seed will result in the same shuffled array every time.
+ */
+function deterministicShuffle(array &$array, int $seed): void
+{
+    mt_srand($seed); // Set seed for deterministic randomness
+    $size = count($array);
+    for ($i = $size - 1; $i > 0; $i--) {
+        $j = mt_rand(0, $i); // Generate a random index within the range
+        // Swap elements at $i and $j
+        $temp = $array[$i];
+        $array[$i] = $array[$j];
+        $array[$j] = $temp;
+    }
+}
