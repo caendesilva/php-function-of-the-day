@@ -121,7 +121,9 @@ function createFinalDatabase(): void
     $database = [];
 
     foreach ($functions as $day => $function) {
-        // Todo: Find the function in the indexes
+        // Find the function in the index
+
+        $indexEntry = $indexes[md5($function)];
 
         $date = date('Y-m-d', mktime(0, 0, 0, 1, $day + 1, YEAR));
 
