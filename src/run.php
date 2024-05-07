@@ -12,6 +12,8 @@ echo "Generating datasets...\n";
  */
 const YEAR = 2024;
 
+require_once __DIR__ . '/lib/dumper.php';
+
 createFunctionDataset();
 downloadFunctionIndexes();
 parseFunctionIndexes();
@@ -138,14 +140,6 @@ function str_starts_with_any(string $haystack, array $needles): bool
     }
 
     return false;
-}
-
-/** @noinspection PhpUnused */
-function dd($data): void
-{
-    var_dump($data);
-
-    die(1);
 }
 
 /**
