@@ -129,8 +129,8 @@ function createFinalDatabase(): void
 
         $database[$date] = [
             'name' => $function,
-            'url' => null,
-            'description' => null,
+            'url' => 'https://www.php.net/manual/en/' . $indexEntry['url'],
+            'description' => $indexEntry['description'],
         ];
     }
 
