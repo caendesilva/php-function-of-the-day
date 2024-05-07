@@ -69,12 +69,19 @@
         .function-card {
             border: 1px solid #ccc;
             border-radius: 5px;
-            padding: 10px;
+            padding: 16px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .function-card h2 {
-            margin-top: 0;
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .function-card hr {
+            margin: 10px auto;
+            max-width: 150px;
         }
 
         .function-card p {
@@ -84,6 +91,27 @@
         .function-card a {
             color: #007bff;
             text-decoration: none;
+            font-style: normal;
+        }
+
+        .function-card a:hover {
+            text-decoration: underline;
+        }
+
+        .function-card blockquote {
+            margin: 0;
+        }
+
+        .function-card blockquote header {
+            margin: 28px;
+        }
+
+        .function-card footer {
+            margin-top: 10px;
+        }
+
+        .function-card footer a {
+            margin: 0 4px;
         }
     </style>
 </head>
@@ -128,9 +156,14 @@
         if (functionOfTheDay) {
             const template = document.getElementById('function-template');
             const functionCard = document.importNode(template.content, true);
-            functionCard.querySelector('.function-name').textContent = functionOfTheDay.name;
+            functionCard.querySelector('.function-name').textContent = functionOfTheDay.name + '()';
             functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
             functionCard.querySelector('.function-url').href = functionOfTheDay.url;
+            functionCard.querySelector('#date').textContent = new Date(today).toDateString();
+            // Build the Twitter share URL
+            const message = 'The #PHP function of the day is ' + functionOfTheDay.name + '() - ' + functionOfTheDay.description + '! Check it out at https://git.desilva.se/php-function-of-the-day #PHPC #PHPFunctionOfTheDay';
+            const twitterShareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(message);
+            functionCard.querySelector('#share-on-twitter').href = twitterShareUrl;
             document.getElementById('function-container').appendChild(functionCard);
         } else {
             const noFunctionMessage = document.createElement('p');
@@ -145,16 +178,24 @@
 <template id="function-template">
     <article class="function-card">
         <header>
-            <h2 class="function-name"></h2>
+            <p>
+                <i>Function of the Day - <span id="date"></span></i>
+            </p>
         </header>
-        <section>
-            <p class="function-description"></p>
-        </section>
-        <footer>
-            <p><a class="function-url" target="_blank">Learn more</a></p>
-        </footer>
+        <blockquote>
+            <header>
+                <h2 class="function-name"></h2>
+                <hr>
+                <span class="function-description"></span>
+            </header>
+            <footer>
+                <cite>
+                    <a class="function-url" target="_blank" title="See the manual entry for this function on PHP.net"><small>See manual entry</small></a>
+                </cite>
+                <a id="share-on-twitter" href="https://twitter.com/intent/tweet?text=Visit%20https%3A%2F%2Fgit.desilva.se%2Fphp-function-of-the-day%20to%20see%20the%20%23php%20function%20of%20the%20day!&url=https%3A%2F%2Fgit.desilva.se%2Fphp-function-of-the-day" target="_blank"><small>Share on Twitter</small></a>
+            </footer>
+        </blockquote>
     </article>
 </template>
-
 </body>
 </html>
