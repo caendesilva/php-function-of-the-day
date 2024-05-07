@@ -107,6 +107,10 @@ function createFinalDatabase(): void
     // Remove common functions from the list
     $functions = array_diff($functions, $common);
 
+    // Remove undocumented functions from the list
+    $indexes = json_decode(file_get_contents(__DIR__ . '/../data/php-function-indexes.json'), true);
+    $functions = array_filter($functions, fn (string $function) => isset($indexes[md5($function)]));
+
     // Extract random functions from the list
     $functions = extractRandomItems($functions, getNumberOfDaysInYear(YEAR), YEAR);
     $functions = array_values($functions);
