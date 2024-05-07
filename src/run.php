@@ -15,6 +15,7 @@ const YEAR = 2024;
 createFunctionDataset();
 downloadFunctionIndexes();
 parseFunctionIndexes();
+createFinalDatabase();
 
 echo "Done! (Completed in " . number_format((microtime(true) - $timeStart) * 1000, 2) . "ms)\n";
 
@@ -92,6 +93,38 @@ function parseFunctionIndexes(): void
     assert(count($functions) > 1000);
 
     file_put_contents(__DIR__ . '/../data/php-function-indexes.json', json_encode($functions, JSON_PRETTY_PRINT));
+}
+
+function createFinalDatabase(): void
+{
+    $functions = explode("\n", trim(file_get_contents(__DIR__ . '/../data/php-functions.txt')));
+    $common = explode("\n", trim(file_get_contents(__DIR__ . '/../data/top-100-functions.txt')));
+
+    // Remove common functions from the list
+    $functions = array_diff($functions, $common);
+
+    // Extract random functions from the list
+    $functions = extractRandomItems($functions, getNumberOfDaysInYear(YEAR), YEAR);
+    $functions = array_values($functions);
+    deterministicShuffle($functions, YEAR);
+
+    $indexes = json_decode(file_get_contents(__DIR__ . '/../data/php-function-indexes.json'), true);
+
+    $database = [];
+
+    foreach ($functions as $day => $function) {
+        // Todo: Find the function in the indexes
+
+        $date = date('Y-m-d', mktime(0, 0, 0, 1, $day + 1, YEAR));
+
+        $database[$date] = [
+            'name' => $function,
+            'url' => null,
+            'description' => null,
+        ];
+    }
+
+    file_put_contents(__DIR__ . '/../data/database.json', json_encode($database, JSON_PRETTY_PRINT));
 }
 
 // Helper functions
