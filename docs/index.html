@@ -110,7 +110,12 @@
 </footer>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json')
+        fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json', {
+            headers: {
+                // Experimental to see if this lets us use the GitHub traffic data
+                'Referer': 'https://php-function-of-the-day-api.caendesilva.github.io/api/database.json'
+            }
+        })
             .then(response => response.json())
             .then(data => displayFunctionOfTheDay(data))
             .catch(error => console.error('Error fetching data:', error));
