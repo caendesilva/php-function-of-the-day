@@ -144,3 +144,11 @@ function deterministicShuffle(array &$array, int $seed): void
         $array[$j] = $temp;
     }
 }
+
+function getNumberOfDaysInYear(int $year): int
+{
+    // Creates a Unix timestamp for January 1st of the given year to check if it's a leap year
+    $isLeapYear = date('L', mktime(0, 0, 0, 1, 1, $year));
+
+    return $isLeapYear ? 366 : 365;
+}
