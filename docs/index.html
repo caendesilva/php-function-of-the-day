@@ -61,6 +61,11 @@
             text-decoration: underline;
         }
 
+        #loading-indicator {
+            text-align: center;
+            font-style: italic;
+        }
+
         .function-card {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -88,7 +93,7 @@
     <p>A static website built with PHP to showcase obscure and underrated built-in PHP functions</p>
 </header>
 <main id="function-container">
-    <!-- Function of the Day will be displayed here -->
+    <p id="loading-indicator">Loading function of the day...</p>
 </main>
 <footer>
     <p>
@@ -129,6 +134,8 @@
             noFunctionMessage.textContent = "Sorry, no function available for today. Someone forgot to update the database! Remind @CodeWithCaen that it's a new near!";
             document.getElementById('function-container').appendChild(noFunctionMessage);
         }
+
+        document.getElementById('loading-indicator').remove();
     }
 </script>
 </body>
