@@ -85,7 +85,9 @@ function parseFunctionIndexes(): void
             throw new Exception('Invalid match count: ' . count($matches) . ' for line: ' . $line);
         }
 
-        $functions[] = [
+        $index = md5($matches[2]);
+
+        $functions[$index] = [
             'name' => $matches[2] ?: null,
             'url' => $matches[1] ?: null,
             'description' => $matches[3] ?: null,
