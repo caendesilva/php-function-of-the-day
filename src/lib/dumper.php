@@ -12,5 +12,7 @@ function dd(...$data): void
 
 function dump(...$data): void
 {
-    var_dump($data);
+    foreach ($data as $item) {
+        var_dump($item);
+    }
 }
