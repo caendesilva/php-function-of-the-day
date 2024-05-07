@@ -5,7 +5,7 @@ use JetBrains\PhpStorm\NoReturn;
 #[NoReturn]
 function dd(...$data): void
 {
-    dump($data);
+    dump(...$data);
 
     die(1);
 }
