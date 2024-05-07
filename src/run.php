@@ -123,7 +123,6 @@ function createFinalDatabase(): void
     foreach ($functions as $day => $function) {
         // Find the function in the index
 
-        echo 'Day '.($day + 1).": $function\n";
         $indexEntry = $indexes[md5($function)];
 
         $date = date('Y-m-d', mktime(0, 0, 0, 1, $day + 1, YEAR));
