@@ -4,6 +4,14 @@ $timeStart = microtime(true);
 
 echo "Generating datasets...\n";
 
+/**
+ * We generate the dataset in advance for the entire year.
+ *
+ * We use this year as the seed for deterministic extracting random functions from the list,
+ * this allows us to create pseudo-random datasets that are the same each time the script is run.
+ */
+const YEAR = 2024;
+
 createFunctionDataset();
 downloadFunctionIndexes();
 parseFunctionIndexes();
