@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Function of The Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin-top: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .function-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .function-card h2 {
+            margin-top: 0;
+        }
+
+        .function-card p {
+            margin-top: 5px;
+        }
+
+        .function-card a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>PHP Function of The Day</h1>
+    <p>A static website built with PHP to showcase obscure and underrated built-in PHP functions</p>
+</header>
+<main id="function-container">
+    <!-- Function of the Day will be displayed here -->
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json')
+            .then(response => response.json())
+            .then(data => displayFunctionOfTheDay(data))
+            .catch(error => console.error('Error fetching data:', error));
+    });
+
+    function displayFunctionOfTheDay(data) {
+        const today = new Date().toISOString().split('T')[0];
+        const functionOfTheDay = data[today];
+
+        if (functionOfTheDay) {
+            const functionCard = document.createElement('div');
+            functionCard.classList.add('function-card');
+            functionCard.innerHTML = `
+            <h2>${functionOfTheDay.name}</h2>
+            <p>${functionOfTheDay.description}</p>
+            <p><a href="${functionOfTheDay.url}" target="_blank">Learn more</a></p>
+        `;
+            document.getElementById('function-container').appendChild(functionCard);
+        } else {
+            const noFunctionMessage = document.createElement('p');
+            noFunctionMessage.textContent = "Sorry, no function available for today.";
+            document.getElementById('function-container').appendChild(noFunctionMessage);
+        }
+    }
+</script>
+</body>
+</html>
