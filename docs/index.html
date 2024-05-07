@@ -137,40 +137,63 @@
     </p>
 </footer>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json', {
-            headers: {
-                // Experimental to see if this lets us use the GitHub traffic data
-                'Referer': 'https://php-function-of-the-day-api.caendesilva.github.io/api/database.json'
+    function loadFunctionOfTheDay(today) {
+            fetch('https://raw.githubusercontent.com/caendesilva/php-function-of-the-day/master/data/database.json', {
+                headers: {
+                    // Experimental to see if this lets us use the GitHub traffic data
+                    'Referer': 'https://php-function-of-the-day-api.caendesilva.github.io/api/database.json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => displayFunctionOfTheDay(data))
+                .catch(error => console.error('Error fetching data:', error));
+
+            function displayFunctionOfTheDay(data) {
+                const functionOfTheDay = data[today];
+
+                if (functionOfTheDay) {
+                    const template = document.getElementById('function-template');
+                    const functionCard = document.importNode(template.content, true);
+                    functionCard.querySelector('.function-name').textContent = functionOfTheDay.name + '()';
+                    functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
+                    functionCard.querySelector('.function-url').href = functionOfTheDay.url;
+                    functionCard.querySelector('#date').textContent = new Date(today).toDateString();
+                    const twitterShareMessage = `The #PHP function of the day is ${functionOfTheDay.name}() - ${functionOfTheDay.description}! Check it out at https://git.desilva.se/php-function-of-the-day #PHPC #PHPFunctionOfTheDay`;
+                    functionCard.querySelector('#share-on-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(twitterShareMessage);
+                    document.getElementById('function-container').appendChild(functionCard);
+                } else {
+                    const noFunctionMessage = document.createElement('p');
+                    noFunctionMessage.textContent = "Sorry, no function available for today. Someone forgot to update the database! Remind @CodeWithCaen that it's a new near!";
+                    document.getElementById('function-container').appendChild(noFunctionMessage);
+                }
+
+                document.getElementById('loading-indicator').remove();
             }
-        })
-            .then(response => response.json())
-            .then(data => displayFunctionOfTheDay(data))
-            .catch(error => console.error('Error fetching data:', error));
-    });
-
-    function displayFunctionOfTheDay(data) {
-        const today = new Date().toISOString().split('T')[0];
-        const functionOfTheDay = data[today];
-
-        if (functionOfTheDay) {
-            const template = document.getElementById('function-template');
-            const functionCard = document.importNode(template.content, true);
-            functionCard.querySelector('.function-name').textContent = functionOfTheDay.name + '()';
-            functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
-            functionCard.querySelector('.function-url').href = functionOfTheDay.url;
-            functionCard.querySelector('#date').textContent = new Date(today).toDateString();
-            const twitterShareMessage = `The #PHP function of the day is ${functionOfTheDay.name}() - ${functionOfTheDay.description}! Check it out at https://git.desilva.se/php-function-of-the-day #PHPC #PHPFunctionOfTheDay`;
-            functionCard.querySelector('#share-on-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(twitterShareMessage);
-            document.getElementById('function-container').appendChild(functionCard);
-        } else {
-            const noFunctionMessage = document.createElement('p');
-            noFunctionMessage.textContent = "Sorry, no function available for today. Someone forgot to update the database! Remind @CodeWithCaen that it's a new near!";
-            document.getElementById('function-container').appendChild(noFunctionMessage);
-        }
-
-        document.getElementById('loading-indicator').remove();
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        loadFunctionOfTheDay(new Date().toISOString().split('T')[0]);
+    });
+</script>
+
+<script defer>
+    // A time travel function that can be called from the console to set the date to a specific day
+    function travelToDay(year, month, day) {
+        const date = new Date(year, month - 1, day + 1);
+        const today = new Date();
+        const diff = date - today;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const newDate = new Date(today.setDate(today.getDate() + days));
+
+        console.log(`Travelling to ${newDate.toDateString()}`);
+
+        // Remove existing function card
+        document.getElementById('function-container').innerHTML = '<p id="loading-indicator">Loading function of the day...</p>';
+
+        loadFunctionOfTheDay(newDate.toISOString().split('T')[0]);
+    }
+
+    // Example usage: travelToDay(2024, 1, 1);
 </script>
 
 <template id="function-template">
