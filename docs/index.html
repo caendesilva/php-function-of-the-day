@@ -121,13 +121,11 @@
         const functionOfTheDay = data[today];
 
         if (functionOfTheDay) {
-            const functionCard = document.createElement('div');
-            functionCard.classList.add('function-card');
-            functionCard.innerHTML = `
-            <h2>${functionOfTheDay.name}</h2>
-            <p>${functionOfTheDay.description}</p>
-            <p><a href="${functionOfTheDay.url}" target="_blank">Learn more</a></p>
-        `;
+            const template = document.getElementById('function-template');
+            const functionCard = document.importNode(template.content, true);
+            functionCard.querySelector('.function-name').textContent = functionOfTheDay.name;
+            functionCard.querySelector('.function-description').textContent = functionOfTheDay.description;
+            functionCard.querySelector('.function-url').href = functionOfTheDay.url;
             document.getElementById('function-container').appendChild(functionCard);
         } else {
             const noFunctionMessage = document.createElement('p');
@@ -138,5 +136,14 @@
         document.getElementById('loading-indicator').remove();
     }
 </script>
+
+<template id="function-template">
+    <div class="function-card">
+        <h2 class="function-name"></h2>
+        <p class="function-description"></p>
+        <p><a class="function-url" target="_blank">Learn more</a></p>
+    </div>
+</template>
+
 </body>
 </html>
