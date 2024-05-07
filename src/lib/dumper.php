@@ -1,8 +1,16 @@
 <?php
 
-function dd($data): void
+use JetBrains\PhpStorm\NoReturn;
+
+#[NoReturn]
+function dd(...$data): void
 {
-    var_dump($data);
+    dump($data);
 
     die(1);
+}
+
+function dump(...$data): void
+{
+    var_dump($data);
 }
